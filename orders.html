@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyMart POS - Orders</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/management.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+</head>
+
+<body>
+    <div class="px-3 py-2 text-bg-dark border-bottom">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="index.html"
+                    class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none fw-bold fs-4">DailyMart
+                    POS</a>
+                <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                    <li> <a href="index.html" class="nav-link text-white"> <svg class="bi d-block mx-auto mb-1"
+                                width="24" height="24" aria-hidden="true">
+                                <use xlink:href="#home"></use>
+                            </svg>
+                            Home
+                        </a> </li>
+                    <li> <a href="products.html" class="nav-link text-white"> <svg class="bi d-block mx-auto mb-1"
+                                width="24" height="24" aria-hidden="true">
+                                <use xlink:href="#grid"></use>
+                            </svg>
+                            Products
+                        </a> </li>
+                    <li> <a href="customers.html" class="nav-link text-white"> <svg class="bi d-block mx-auto mb-1"
+                                width="24" height="24" aria-hidden="true">
+                                <use xlink:href="#table"></use>
+                            </svg>
+                            Customers
+                        </a> </li>
+                    <li> <a href="orders.html" class="nav-link text-secondary"> <svg class="bi d-block mx-auto mb-1"
+                                width="24" height="24" aria-hidden="true">
+                                <use xlink:href="#table"></use>
+                            </svg>
+                            Orders
+                        </a> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <main class="container py-4">
+        <h1 class="mb-4">Order History</h1>
+
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">Recent Orders (Newest First)</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Date/Time</th>
+                                <th>Items</th>
+                                <th>Total Bill</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="order-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderDetailsModalLabel">Order Details #<span id="orderIdDisplay"></span>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6"><strong>Date:</strong> <span id="orderDateDisplay"></span></div>
+                        <div class="col-md-6"><strong>Total:</strong> <span id="orderTotalDisplay"
+                                class="fw-bold text-success"></span></div>
+                    </div>
+
+                    <h6>Items Ordered</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th style="width: 100px;">Qty</th>
+                                    <th style="width: 120px;">Unit Price</th>
+                                    <th style="width: 120px;">Item Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="order-details-body">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row justify-content-end">
+                        <div class="col-6 col-md-4">
+                            <ul class="list-unstyled">
+                                <li>Subtotal: <span class="float-end" id="orderSubtotalDisplay"></span></li>
+                                <li>Tax (10%): <span class="float-end" id="orderTaxDisplay"></span></li>
+                                <li class="fw-bold border-top mt-2 pt-2">Grand Total: <span class="float-end"
+                                        id="orderFinalBillDisplay"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-1 border-top bg-black">
+        <div class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1" aria-label="Bootstrap"> <svg
+                class="bi" width="30" height="24" aria-hidden="true">
+                <use xlink:href="#bootstrap"></use>
+            </svg> </a> <span class="mb-3 mb-md-0 text-light">© 2025 Company, Inc</span> </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script src="assets/js/management.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>

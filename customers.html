@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyMart POS - Customers</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/management.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+</head>
+
+<body>
+    <div class="px-3 py-2 text-bg-dark border-bottom">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="index.html"
+                    class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none fw-bold fs-4">DailyMart
+                    POS</a>
+                <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                    <li> <a href="index.html" class="nav-link text-white"> <svg class="bi d-block mx-auto mb-1"
+                                width="24" height="24" aria-hidden="true">
+                                <use xlink:href="#home"></use>
+                            </svg>
+                            Home
+                        </a> </li>
+                    <li> <a href="products.html" class="nav-link text-white"> <svg class="bi d-block mx-auto mb-1"
+                                width="24" height="24" aria-hidden="true">
+                                <use xlink:href="#grid"></use>
+                            </svg>
+                            Products
+                        </a> </li>
+                    <li> <a href="customers.html" class="nav-link text-secondary"> <svg class="bi d-block mx-auto mb-1"
+                                width="24" height="24" aria-hidden="true">
+                                <use xlink:href="#table"></use>
+                            </svg>
+                            Customers
+                        </a> </li>
+                    <li> <a href="orders.html" class="nav-link text-white"> <svg class="bi d-block mx-auto mb-1"
+                                width="24" height="24" aria-hidden="true">
+                                <use xlink:href="#table"></use>
+                            </svg>
+                            Orders
+                        </a> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <main class="container py-4">
+        <h1 class="mb-4">Customer Management</h1>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Customer List</h5>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#customerModal"
+                    id="addCustomerBtn">
+                    Add New Customer
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customer-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="customerModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="customerForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="customerModalLabel">Add New Customer</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="customer-id">
+                        <div class="mb-3">
+                            <label for="customer-name" class="form-label">Name*</label>
+                            <input type="text" class="form-control" id="customer-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customer-phone" class="form-label">Phone*</label>
+                            <input type="tel" class="form-control" id="customer-phone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="customer-email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="customer-email">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Customer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-1 border-top bg-black">
+        <div class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1" aria-label="Bootstrap"> <svg
+                class="bi" width="30" height="24" aria-hidden="true">
+                <use xlink:href="#bootstrap"></use>
+            </svg> </a> <span class="mb-3 mb-md-0 text-light">© 2025 Company, Inc</span> </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script src="assets/js/management.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>

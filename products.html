@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyMart POS - Products</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/management.css">
+    <style>
+        .product-card {
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .cart-item {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+
+        .empty-cart-message {
+            text-align: center;
+            color: #888;
+            font-style: italic;
+            padding: 40px 20px;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+
+    <!-- Navbar -->
+    <div class="px-3 py-2 text-bg-dark border-bottom">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="index.html"
+                    class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none fw-bold fs-4">
+                    DailyMart POS
+                </a>
+                <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                    <li><a href="index.html" class="nav-link text-white">Home</a></li>
+                    <li><a href="products.html" class="nav-link text-secondary">Products</a></li>
+                    <li><a href="customers.html" class="nav-link text-white">Customers</a></li>
+                    <li><a href="orders.html" class="nav-link text-white">Orders</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="container my-4 d-flex justify-content-between align-items-center">
+        <h2 class="h3 mb-0">Products Available</h2>
+        <div class="d-flex align-items-center gap-2">
+            <input type="search" class="form-control" placeholder="Search products..." aria-label="Search">
+            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#productManagementModal">
+                Manage Products
+            </button>
+        </div>
+    </header>
+
+    <main class="container-fluid d-flex flex-wrap flex-lg-nowrap gap-4">
+
+        <!-- Product Grid -->
+        <section class="flex-grow-1">
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4" id="product-list"></div>
+        </section>
+
+        <!-- Cart Sidebar -->
+        <section class="bg-white p-4 rounded shadow" style="min-width: 340px; max-height: 90vh; overflow-y: auto;">
+            <h4 class="text-primary mb-3">Order Cart</h4>
+            <div id="cart-items" class="mb-4">
+                <div class="empty-cart-message">Cart is empty. Add items to begin.</div>
+            </div>
+
+            <div class="border-top pt-3">
+                <div class="d-flex justify-content-between mb-2"><span>Subtotal:</span> <span
+                        id="subtotal">Rs.0.00</span></div>
+                <div class="d-flex justify-content-between mb-2"><span>Tax (10%):</span> <span id="tax">Rs.0.00</span>
+                </div>
+                <div class="d-flex justify-content-between fs-5 fw-bold text-danger">
+                    <span>Final Bill:</span> <span id="final-bill">Rs.0.00</span>
+                </div>
+            </div>
+
+            <div class="mt-4 d-grid gap-2">
+                <button id="checkout-button" class="btn btn-success btn-lg" onclick="checkout()">Checkout</button>
+                <button class="btn btn-outline-secondary" onclick="clearCart()">Clear Cart</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Product Management Modal -->
+    <div class="modal fade" id="productManagementModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Product Management (CRUD)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-end mb-3">
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#productModal">Add New
+                            Product</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="product-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Product Modal -->
+    <div class="modal fade" id="productModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="productForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="productModalLabel">Add New Product</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="product-id">
+                        <div class="mb-3">
+                            <label class="form-label">Product Name*</label>
+                            <input type="text" class="form-control" id="product-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Price (Rs.)*</label>
+                            <input type="number" step="0.01" class="form-control" id="product-price" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Image Path (optional)</label>
+                            <input type="text" class="form-control" id="product-image-path"
+                                placeholder="assets/img/new-product.jpg">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Receipt Modal -->
+    <div class="modal fade" id="receiptModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Transaction Complete!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <pre id="receiptContent" style="
+                        background: #f3efef;
+                        color: black;
+                        padding: 20px;
+                        border-radius: 12px;
+                        font-family: 'Courier New', monospace;
+                        font-size: 14px;
+                        line-height: 1.4;
+                        text-align: center;
+                        letter-spacing: 1px;
+                        white-space: pre;
+                        overflow-x: auto;
+                    "></pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/management.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>
